@@ -1,0 +1,57 @@
+<script>
+    markers = <%=raw orders_map_markers(@orders).to_json %>;
+    //add_markers(markers);
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARshHRf_7I_FdTAhDodxLQjYGkiYYciyA&callback=initMap" type="text/javascript">
+</script>
+
+<div class="row">
+  <div class="col-lg-9">
+    <h3>Orders to deliver</h3>
+
+    <%= search_form_for(@q, url: root_path, class: 'form-inline') do |f| %>
+      <div class="form-group">
+        <%= f.label :order_number_cont %>
+        <%= f.search_field :order_number_cont, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :tracking_number_cont %>
+        <%= f.search_field :tracking_number_cont, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= f.label :vendor_name_cont %>
+        <%= f.search_field :vendor_name_cont, class: 'form-control' %>
+      </div>
+
+      <%= f.submit class: 'btn btn-default' %>
+    <% end %>
+    <br>
+    <div class="form-group">
+      <div style='width: 800px;'>
+        <div id="map" style='width: 800px; height: 400px;'></div>
+      </div>
+    </div>
+
+    <br>
+      <%= will_paginate @orders %>
+    <br>
+
+
+    <table class="table table-stripped">
+      <thead>
+        <tr>
+          <th>Order Number</th>
+          <th>Vendor</th>
+          <th>Shipping Address</th>
+          <th>Tracking Number</th>
+        </tr>
+      </thead>
+      <tbody>
+        <%= render partial: 'dashboard/order', collection: @orders, as: :order %>
+      </tbody>
+    </table>
+  </div>
+  <%= render partial: 'sidebar' %>
+</div>

@@ -1,0 +1,9 @@
+<tr>
+  <td><%= order.order_number %></td>
+  <td><%= vendor_name(order) %></td>
+  <td><%= order.shipping_address %>
+    <br>
+    <%=order.latitude%>, <%=order.longitude%>
+  </td>
+  <td><%= order.tracking_number %></td>
+</tr>
